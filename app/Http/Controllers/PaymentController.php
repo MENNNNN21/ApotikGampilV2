@@ -157,17 +157,17 @@ class PaymentController extends Controller
     }
 
     // ✅ Fungsi untuk menandai transaksi selesai (manual)
-   // public function tandaiSelesai($id)
-   // {
-     //   $transaksi = Transaksi::findOrFail($id);
+    public function tandaiSelesai($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
 
-       // if ($transaksi->status_pembayaran === 'dibayar') {
-         //   $transaksi->status_pembayaran = 'selesai';
-           // $transaksi->save();
+        if ($transaksi->status_pembayaran === 'dibayar') {
+            $transaksi->status_pembayaran = 'selesai';
+            $transaksi->save();
 
-            // return back()->with('success', 'Transaksi ditandai sebagai selesai.');
-       // }
+             return back()->with('success', 'Transaksi ditandai sebagai selesai.');
+        }
 
-        //return back()->with('error', 'Transaksi belum dibayar atau sudah selesai.');
-   // }
+        return back()->with('error', 'Transaksi belum dibayar atau sudah selesai.');
+   }
 }
