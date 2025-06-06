@@ -15,6 +15,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\KontakController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\BiteshipController;
 
 // Rute Publik Pengguna Biasa
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -100,3 +101,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/checkout/validasi', [PaymentController::class, 'simpanValidasi'])->name('checkout.simpan-validasi');
     Route::match(['GET', 'POST'],'/checkout/pay', [PaymentController::class, 'pay'])->name('checkout.pay');
 });
+
+Route::post('/biteship/rates', [BiteshipController::class, 'getRates'])->name('biteship.getRates')->middleware('auth');
