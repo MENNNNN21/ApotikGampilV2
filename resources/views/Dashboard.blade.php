@@ -96,11 +96,14 @@
         </form>
     </div>
     
-                    
-                        <a class="btn btn-link text-black position-relative me-2" href="{{ url('/cart')}}"> 
+                    <a class="btn btn-link text-black position-relative me-2" href="{{ url('/cart')}}"> 
                             <i class="fas fa-shopping-cart fs-5"></i>
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                
+                                @auth
+                                    {{ Auth::user()->cart->count() }}
+                                @else
+                                    0
+                                @endauth
                             </span>
                         </a>
 
@@ -219,7 +222,10 @@
             </div>
             
             <div class="text-center mt-5">
-                <button class="btn btn-outline-success border-2 px-4 py-2 fw-bold">Lihat Semua Produk</button>
+                <a href="{{ url('/produk') }}" class="btn btn-outline-success border-2 px-4 py-2 fw-bold">
+                    Lihat Semua Produk
+                </a>
+
             </div>
         </div>
     </section>
@@ -233,12 +239,11 @@
             <h2 class="fw-bold mb-4">Butuh Bantuan?</h2>
             <p class="lead mb-5 mx-auto" style="max-width: 600px;">Tim customer service kami siap membantu Anda  melalui layanan chat online atau telepon.</p>
             <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
-                <button class="btn btn-light text-success fw-bold px-4 py-3">
+                <a href="https://wa.me/6285194295020" target="_blank" class="btn btn-light text-success fw-bold px-4 py-3">
                     <i class="fas fa-phone-alt me-2"></i> Hubungi Kami
-                </button>
-                <button class="btn btn-outline-light border-2 fw-bold px-4 py-3">
-                    <i class="fas fa-comment-alt me-2"></i> Chat Sekarang
-                </button>
+                </a>
+
+            
             </div>
         </div>
     </section>
@@ -263,8 +268,6 @@
                     <ul class="list-unstyled">
                         <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Beranda</a></li>
                         <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Produk</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Promo</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Artikel Kesehatan</a></li>
                         <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
                     </ul>
                 </div>

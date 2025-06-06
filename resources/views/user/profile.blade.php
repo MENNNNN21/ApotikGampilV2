@@ -12,8 +12,13 @@
 
           <div class="d-flex align-items-center mb-4">
             <div class="me-4">
-              <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=0D8ABC&color=fff&size=100" 
-                   class="rounded-circle border border-2" width="100" height="100" alt="Avatar">
+              @if(Auth::user()->gambar)
+            <img src="{{ asset('storage/' . Auth::user()->gambar) }}" 
+              class="rounded-circle border border-2" width="100" height="100" alt="Avatar">
+          @else
+            <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=0D8ABC&color=fff&size=100" 
+            class="rounded-circle border border-2" width="100" height="100" alt="Avatar">
+            @endif
             </div>
             <div>
               <h5 class="mb-1">{{ Auth::user()->name }}</h5>
@@ -33,15 +38,21 @@
             <div class="form-control bg-light">{{ Auth::user()->email }}</div>
           </div>
 
+          <div class="mb-3">
+            <label class="form-label fw-semibold">No Hp</label>
+            <div class="form-control bg-light">{{ Auth::user()->no_hp}}</div>
+          </div>
+
           @if(Auth::user()->alamat)
           <div class="mb-3">
             <label class="form-label fw-semibold">Alamat</label>
             <div class="form-control bg-light">{{ Auth::user()->alamat }}</div>
           </div>
           @endif
+          
 
           <div class="d-flex justify-content-between mt-4">
-            <a href="{{ route('user.editProfil') }}" class="btn btn-outline-primary">
+            <a href="{{ route('user.edit_profile') }}" class="btn btn-outline-primary">
               <i class="fas fa-edit me-1"></i> Edit Profil
             </a>
             <form action="{{ route('logout') }}" method="POST">

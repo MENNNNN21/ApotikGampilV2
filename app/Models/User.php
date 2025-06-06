@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasFactory, Notifiable;
+    
     protected $table = 'users';
     protected $primaryKey = 'id';
+    
     protected $fillable = [
         'name',
         'email',
@@ -20,8 +22,18 @@ class User extends Authenticatable
         'gambar',
     ];
 
-    public function cart(){
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
+    public function cart()
+    {
         return $this->hasMany(Cart::class, 'user_id', 'id');
     }
-
 }

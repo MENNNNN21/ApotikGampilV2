@@ -22,7 +22,7 @@ Route::get('/dashboard/search-produk', [DashboardController::class, 'searchProdu
 Route::get('/dashboard/hasil-pencarian', [DashboardController::class, 'showResultsPage'])->name('dashboard.showResultsPage');
 
 Route::get('/login', [LoginController::class, 'showLogin'])->name('login');
-Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
@@ -86,7 +86,7 @@ Route::middleware(['auth'])->group(function () {
     // Cart Routes
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
-    Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update'); // Ubah dari PATCH ke PUT
+    Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
     Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 
@@ -95,8 +95,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profil/edit', [UserController::class, 'edit'])->name('user.edit_profile');
     Route::put('/profil/update', [UserController::class, 'update'])->name('user.update');
 
-    // Checkout & Payment Routes - DIPERBAIKI
+    // Checkout & Payment Routes
     Route::get('/checkout/validasi', [PaymentController::class, 'validasi'])->name('checkout.validasi');
-    Route::post('/checkout/simpan-validasi', [PaymentController::class, 'simpanValidasi'])->name('checkout.simpanValidasi');
-   Route::match(['GET', 'POST'], '/checkout/pay', [PaymentController::class, 'pay'])->name('checkout.pay');
+    Route::post('/checkout/validasi', [PaymentController::class, 'simpanValidasi'])->name('checkout.simpan-validasi');
+    Route::match(['GET', 'POST'],'/checkout/pay', [PaymentController::class, 'pay'])->name('checkout.pay');
 });

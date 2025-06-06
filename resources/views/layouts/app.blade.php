@@ -61,7 +61,11 @@
                         <a class="btn btn-link text-black position-relative me-2" href="{{ url('/cart')}}"> 
                             <i class="fas fa-shopping-cart fs-5"></i>
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                3
+                                @auth
+                                    {{ Auth::user()->cart->count() }}
+                                @else
+                                    0
+                                @endauth
                             </span>
                         </a>
 

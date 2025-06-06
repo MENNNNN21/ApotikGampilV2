@@ -23,33 +23,45 @@
             <p class="mt-4">{{ $obat->deskripsi }}</p>
 
             {{-- Form Tambah ke Keranjang --}}
-            <form action="{{ route('produk.addToCart', $obat->id) }}" method="POST" class="mt-4">
-                @csrf
-                <div class="mb-3 d-flex align-items-center">
-                    <label for="jumlah" class="me-3">Jumlah:</label>
-                    <div class="input-group" style="width: 120px;">
-                        <button type="button" class="btn btn-outline-secondary" onclick="ubahJumlah(-1)">-</button>
-                        <input type="number" name="jumlah" id="jumlah" class="form-control text-center" value="1" min="1">
-                        <button type="button" class="btn btn-outline-secondary" onclick="ubahJumlah(1)">+</button>
-                    </div>
-                </div>
+            <form action="{{ route('cart.store') }}" method="POST" class="mt-4">
+    
+    {{-- @csrf adalah token keamanan yang wajib ada di setiap form POST di Laravel --}}
+    @csrf
 
-                <button type="submit" class="btn btn-warning fw-bold px-4">
-                    <i class="fas fa-cart-plus me-2"></i> Masukkan ke Keranjang
-                </button>
-            </form>
+    {{-- Data yang akan dikirim --}}
+    {{-- 1. ID Produk (wajib ada karena controller membutuhkannya) --}}
+    <input type="hidden" name="produk_id" value="{{ $obat->id }}">
+
+    {{-- 2. Jumlah Produk (wajib ada karena controller membutuhkannya) --}}
+    <div class="mb-3 d-flex align-items-center">
+        <label for="jumlah" class="me-3">Jumlah:</label>
+        <input type="hidden" name="jumlah" id="jumlah_hidden" value="1">
+        <div class="input-group" style="width: 120px;">
+            <button type="button" class="btn btn-outline-secondary" onclick="ubahJumlah(-1)">-</button>
+            <input type="number" id="jumlah_display" class="form-control text-center" value="1" min="1" readonly>
+            <button type="button" class="btn btn-outline-secondary" onclick="ubahJumlah(1)">+</button>
+        </div>
+    </div>
+
+    {{-- Tombol untuk mengirim form --}}
+    <button type="submit" class="btn btn-warning fw-bold px-4">
+        <i class="fas fa-cart-plus me-2"></i> Masukkan ke Keranjang
+    </button>
+</form>
         </div>
     </div>
 </div>
 
 <script>
-    function ubahJumlah(delta) {
-        const input = document.getElementById('jumlah');
-        let nilai = parseInt(input.value);
-        if (!isNaN(nilai)) {
-            nilai = Math.max(1, nilai + delta);
-            input.value = nilai;
-        }
+function ubahJumlah(delta) {
+    const display = document.getElementById('jumlah_display');
+    const hidden = document.getElementById('jumlah_hidden');
+    let nilai = parseInt(display.value);
+    if (!isNaN(nilai)) {
+        nilai = Math.max(1, nilai + delta);
+        display.value = nilai;
+        hidden.value = nilai; // Sync dengan hidden input
     }
+}
 </script>
 @endsection
